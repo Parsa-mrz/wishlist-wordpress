@@ -1,6 +1,6 @@
 Add These code to your function.php of child theme.
 
-require_once get_stylesheet_directory() . 'wishlist/post-wishlist.php';
+require_once get_stylesheet_directory() . '/wishlist/post-wishlist.php';
 function enqueue_custom_scripts()
 {
     wp_enqueue_script('jquery');

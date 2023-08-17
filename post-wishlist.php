@@ -56,3 +56,39 @@ function save_post_callback()
 }
 add_action('wp_ajax_save_post', 'save_post_callback');
 add_action('wp_ajax_save_post', 'save_post_callback');
+
+
+
+function display_saved_posts_shortcode($atts)
+{
+    if (is_user_logged_in()) {
+        $user_id = get_current_user_id();
+        $saved_posts = get_user_meta($user_id, 'saved-post', true);
+
+        if (!empty($saved_posts)) {
+            $args = array(
+                'post_type' => 'post', // Adjust to your custom post type if needed
+                'post__in' => $saved_posts,
+                'orderby' => 'post__in'
+            );
+
+            $saved_post_query = new WP_Query($args);
+
+            if ($saved_post_query->have_posts()) {
+                $output = '<ul>';
+                while ($saved_post_query->have_posts()) {
+                    $saved_post_query->the_post();
+                    $output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+                }
+                $output .= '</ul>';
+                wp_reset_postdata();
+                return $output;
+            }
+        } else {
+            return 'No saved posts found.';
+        }
+    } else {
+        return 'You must be logged in to view saved posts.';
+    }
+}
+add_shortcode('saved_posts', 'display_saved_posts_shortcode');
