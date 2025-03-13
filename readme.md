@@ -1,8 +1,8 @@
-### Installation
+## Installation
 
-## 1- create wishlist folder in your child theme and upload files.
+### 1- create wishlist folder in your child theme and upload files.
 
-## 2 - Add These code to your function.php of child theme:
+### 2 - Add These code to your function.php of child theme:
 
 ```php 
 require_once get_stylesheet_directory() . '/wishlist/post-wishlist.php';
